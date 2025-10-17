@@ -1,0 +1,20 @@
+#include <iostream>
+
+using namespace std;
+
+int nod(int n, int m) {
+    if (m == 0) {
+        return n;
+    }
+    if (n > m) {
+        return nod(m, n % m);
+    }
+    else{ return nod(n, m % n);
+    }
+}
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+    cout << nod(n, m);
+}
