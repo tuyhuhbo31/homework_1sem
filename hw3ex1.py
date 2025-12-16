@@ -27,45 +27,15 @@ class ThreeDVector:
             return ThreeDVector(self.x*other, self.y*other, self.z*other)
     def __repr__(self):
         return f"Vector({self.x}, {self.y}, {self.z})"
+    
+def inputtvec():
+    n = int(input('Введите количество векторов '))
+    vectors = []
+    for x in range(n):
+        t = str(input(f"введите координаты {x+1} вектора : "))
+        vectors += [Vector(t)]
+    return vectors
 
-
-def input_vector():
-    input_str = input("Введите координаты вектора (x,y,z): ")
-    crds = [float(crds) for crds in input_str.split()]
-    if len(crds) != 3:
-        print("Ошибка: нужно ввести ровно 3 координаты")
-        return None
-    return ThreeDVector(crds[0], crds[1], crds[2])
-def mass_c(dotlist):
-    mc = ThreeDVector(0, 0 ,0)
-    for vect in dotlist:
-        mc += vect*((N)**(-1))
-    return mc
-
-N = int(input('Введите количество точек:'))
-dotlist = []
-for i in range(N):
-    vect = input_vector()
-    dotlist.append(vect)
-    if vect is None:
-        vect = ThreeDVector(0,0,0)
-        dotlist.append(vect)
-c_mass = mass_c(dotlist)
-max_S = 0
-for i in range(N):
-    for j in range(i+1,N):
-        for k in range(j+1,N):
-            if ((dotlist[i].x/dotlist[j].x) == (dotlist[i].y/dotlist[j].y) == (dotlist[i].z/dotlist[j].z)) and ((dotlist[i].x/dotlist[k].x) == (dotlist[i].y/dotlist[k].y) == (dotlist[i].z/dotlist[k].z)):
-                continue
-            if i == N-2:
-                break
-            if j == N-1:
-                continue
-            s1 = abs(dotlist[j] - dotlist[i])
-            s2 = abs(dotlist[k] - dotlist[i])
-            s3 = abs(dotlist[k] - dotlist[j])
-            pp = (s1 + s2 + s3)/2
-            sq = (pp*(pp-s1)*(pp-s2)*(pp-s3))**(0.5)
-            if sq > max_S:
-                max_S = sq
-print(max_S)
+vectors = inputtvec()
+print(f"Координата центра масс {Vector.centre(vectors)}")
+print(f"Максимальная площадь = {Vector.searchS(vectors)}")
