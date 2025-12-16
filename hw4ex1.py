@@ -19,20 +19,15 @@ def func(n):
 import unittest
 
 class BaseTest(unittest.TestCase):
-    def test_subprimes(self):
-        self.assertListEqual(func(2), [2])
-        self.assertListEqual(func(3), [3])
-    def test_primes(self):
-        self.assertListEqual(func(7), [7])
-        self.assertListEqual(func(11), [11])
-        self.assertListEqual(func(977), [977])
-    def test_simple_compounds(self):
-        self.assertListEqual(func(6), [2, 3])
-        self.assertListEqual(func(8), [2, 2, 2])
-        self.assertListEqual(func(121), [11, 11])
-        self.assertListEqual(func(2), [2])
-    def test_complex_compounds(self):
-        self.assertListEqual(func(120120), [2, 2, 2, 3, 5, 7, 11, 13])
-
+    def test_1(self):
+        self.assertEqual(func(2), [2])
+    def test_2(self):
+        self.assertEqual(func(6), [2, 3])
+        self.assertEqual(func(12), [2, 2, 3])
+    def test_3(self):
+        self.assertEqual(func(97), [97])
+    def test_4(self):
+        self.assertEqual(func(1000000), [2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5, 5])
+        
 if __name__ == "__main__":
     unittest.main()
