@@ -74,4 +74,4 @@ for i in range(3):
 
 with open("links.txt", "w", encoding="utf-8") as f:
     for t, u in visited:
-        f.write(f"{t} -> {u}\n")
+        f.write(f"{t} -> {u}\n")# ДЗ от 6 марта
