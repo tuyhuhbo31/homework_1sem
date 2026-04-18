@@ -1,1 +1,1 @@
-all hw from sem1 here
+all hws from sem1 are here
