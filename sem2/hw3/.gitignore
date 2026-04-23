@@ -1,0 +1,4 @@
+data/raw/*
+data/out/*
+!data/raw/.gitkeep
+!data/out/.gitkeep
