@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup as bs
 
 bsu = "https://ru.wikipedia.org"
 hdr = {"User-Agent": "edu-hw2/1.0"}
-tg = "Принцип относительности"
+tg = "Теорема о движении центра масс системы"
 
 
 def t2u(t):
@@ -37,7 +37,7 @@ def rnd_t():
     return h.get_text(strip=True) if h else None
 
 
-def lnk(t, ml=30):
+def lnk(t, ml=60):
     r = rq.get(t2u(t), headers=hdr, timeout=25)
     r.raise_for_status()
     s = bs(r.text, "lxml")
@@ -59,28 +59,43 @@ def lnk(t, ml=30):
     return out
 
 
-def bfs(st, md=6, ml=30, sl=0.2, mx=6000):
-    q = deque([(st, 0)])
-    vis = {st}
+def bfs(st, md=6, ml=60, sl=0.0, mx=5000):
+    q = deque([st])
+    dep = {st: 0}
+    par = {st: None}
     n = 0
+
     while q:
-        t, d = q.popleft()
+        t = q.popleft()
+        d = dep[t]
         if t == tg:
-            return d
+            p = []
+            x = t
+            while x is not None:
+                p.append(x)
+                x = par[x]
+            p.reverse()
+            return d, p
+
         if d >= md:
             continue
+
         try:
             nb = lnk(t, ml=ml)
         except Exception:
             nb = []
+
         for x in nb:
-            if x in vis:
+            if x in dep:
                 continue
-            vis.add(x)
-            q.append((x, d + 1))
+            dep[x] = d + 1
+            par[x] = t
+            q.append(x)
+
         n += 1
         if n >= mx:
             break
         if sl:
             time.sleep(sl)
-    return None
+
+    return None, [st]

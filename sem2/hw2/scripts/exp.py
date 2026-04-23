@@ -4,21 +4,23 @@ from pathlib import Path
 from wk.wiki import rnd_t, bfs, tg
 
 
-def main(n=50, md=6, ml=30, sl=0.2):
+def main(n=30, md=7, ml=60, sl=0.0):
     rt = Path(__file__).resolve().parents[1]
     df = rt / "data"
     df.mkdir(exist_ok=True)
     fn = df / "res.csv"
 
-    res, ok = [], []
-    for _ in range(n):
+    res = []
+    ok = 0
+    for i in range(1, n + 1):
         st = None
         while not st:
             st = rnd_t()
-        k = bfs(st, md=md, ml=ml, sl=sl)
+        k, _ = bfs(st, md=md, ml=ml, sl=sl)
         res.append((st, k))
         if k is not None:
-            ok.append(k)
+            ok += 1
+        print(i, "/", n, "steps:", k)
 
     with open(fn, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
@@ -27,12 +29,8 @@ def main(n=50, md=6, ml=30, sl=0.2):
 
     print(tg)
     print("n =", n)
-    print("ok =", len(ok))
-    print("fail =", n - len(ok))
-    if ok:
-        print("min =", min(ok))
-        print("max =", max(ok))
-        print("avg =", sum(ok) / len(ok))
+    print("ok =", ok)
+    print("fail =", n - ok)
 
 
 if __name__ == "__main__":
